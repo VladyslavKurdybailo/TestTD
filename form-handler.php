@@ -4,7 +4,6 @@
  * Обробник двох форм:
  *   - QUICK APPOINTMENT (#contactform1)
  *   - GET AN APPOINTMENT (#contactform)
- *
  * - Повертає JSON-відповідь (success, message, redirectUrl).
  * - Зберігає дані у SQLite (contacts).
  * - Логує запити у файл.
@@ -48,6 +47,10 @@ try {
     if ($firstName === '') {
         $errors[] = "You must enter your first name.";
     }
+    // Перевірка прізвища
+    if ($lastName === '') {
+        $errors[] = "You must enter your last name.";
+    }
     // Перевірка email
     if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors[] = "Invalid email address.";
@@ -56,7 +59,12 @@ try {
     if (!preg_match('/^\+?\d{7,15}$/', $phone)) {
         $errors[] = "Invalid phone number.";
     }
-
+    // Валідація коментарів (опціонально: перевірка на XSS)
+    if (!empty($comments) && strlen($comments) > 500) {
+        $errors[] = "Comments should not exceed 500 characters.";
+    } elseif (!empty($comments)) {
+        $comments = htmlspecialchars($comments, ENT_QUOTES, 'UTF-8'); // Захист від XSS
+    }
     if (!empty($errors)) {
         // Повертаємо JSON з помилками
         echo json_encode([
@@ -128,7 +136,8 @@ try {
     exit;
 
 } catch (Exception $e) {
-    // Якщо виникла непередбачена помилка - Логуємо
+    // Якщо виникла непередбачена помилка
+    // Логуємо
     $logFile = __DIR__ . '/logs/form_requests.log';
     $errorData = sprintf("[%s] [FATAL ERROR] %s\n", date('Y-m-d H:i:s'), $e->getMessage());
     file_put_contents($logFile, $errorData, FILE_APPEND);

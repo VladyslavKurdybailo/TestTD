@@ -77,6 +77,41 @@
         // 1) GET AN APPOINTMENT (#contactform)
         $('#contactform').submit(async function(e) {
             e.preventDefault(); // блокуємо дефолтний submit
+            // Валідація форми
+            let isValid = true;
+            let errorMessage = '';
+
+            const firstName = $('#first_name').val().trim();
+            const lastName = $('#last_name').val().trim();
+            const email = $('#email').val().trim();
+            const phone = $('#phone').val().trim();
+            const service = $('#select_service').val();
+            const price = $('#select_price').val();
+
+            if (!firstName || firstName.length < 2) {
+                isValid = false;
+                errorMessage += 'First name must be at least 2 characters long.\n';
+            }
+
+            if (!lastName || lastName.length < 2) {
+                isValid = false;
+                errorMessage += 'Last name must be at least 2 characters long.\n';
+            }
+
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                isValid = false;
+                errorMessage += 'Please enter a valid email address.\n';
+            }
+
+            if (!phone || !/^\+?\d{7,15}$/.test(phone)) {
+                isValid = false;
+                errorMessage += 'Please enter a valid phone number (7-15 digits).\n';
+            }
+
+            if (!isValid) {
+                alert(errorMessage); // Виводимо повідомлення з помилками
+                return; // Зупиняємо відправку форми, якщо є помилки
+            }
 
             const action = $(this).attr('action'); // має бути "form-handler.php"
             const csrfToken = $('input[name="csrf_token"]').val(); // Получение CSRF-токена
@@ -163,6 +198,43 @@
         // 2) QUICK APPOINTMENT (#contactform1)
         $('#contactform1').submit(async function(e) {
             e.preventDefault();
+            const form = $(this);
+
+            // Валідація форми
+            let isValid = true;
+            let errorMessage = '';
+
+            const firstName = $('#first_name1').val().trim();
+            const lastName = $('#last_name1').val().trim();
+            const email = $('#email1').val().trim();
+            const phone = $('#phone1').val().trim();
+            const service = $('#select_service1').val();
+            const price = $('#select_price1').val();
+
+            if (!firstName || firstName.length < 2) {
+                isValid = false;
+                errorMessage += 'First name must be at least 2 characters long.\n';
+            }
+
+            if (!lastName || lastName.length < 2) {
+                isValid = false;
+                errorMessage += 'Last name must be at least 2 characters long.\n';
+            }
+
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                isValid = false;
+                errorMessage += 'Please enter a valid email address.\n';
+            }
+
+            if (!phone || !/^\+?\d{7,15}$/.test(phone)) {
+                isValid = false;
+                errorMessage += 'Please enter a valid phone number (7-15 digits).\n';
+            }
+
+            if (!isValid) {
+                alert(errorMessage); // Виводимо повідомлення з помилками
+                return; // Зупиняємо відправку форми, якщо є помилки
+            }
 
             const action = $(this).attr('action'); // form-handler.php
             const csrfToken = $('input[name="csrf_token"]').val(); // Получение CSRF-токена

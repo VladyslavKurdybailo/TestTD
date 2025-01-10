@@ -23,6 +23,7 @@ function getDBConnection() {
             service TEXT,
             comments TEXT,
             price TEXT,  
+            geo_data TEXT,
             created_at DATETIME
         );
 
