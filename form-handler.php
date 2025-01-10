@@ -128,8 +128,7 @@ try {
     exit;
 
 } catch (Exception $e) {
-    // Якщо виникла непередбачена помилка
-    // Логуємо
+    // Якщо виникла непередбачена помилка - Логуємо
     $logFile = __DIR__ . '/logs/form_requests.log';
     $errorData = sprintf("[%s] [FATAL ERROR] %s\n", date('Y-m-d H:i:s'), $e->getMessage());
     file_put_contents($logFile, $errorData, FILE_APPEND);

@@ -1,6 +1,54 @@
-/******************************************
-    File Name: custom.css
-    Template Name: Aven
-/****************************************** */
+/* Загальні стилі для модального вікна */
+.modal-content {
+    border-radius: 10px;
+    background-color: #f9f9f9; /* Світло-сірий фон */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
 
-/** ADD YOUR AWESOME CODES HERE **/
+.modal-header {
+    background-color: #007bff; /* Синій фон */
+    color: white; /* Білий текст */
+    border-bottom: none; /* Видаляємо стандартну лінію */
+    text-align: center;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.modal-body {
+    font-size: 1rem;
+    color: #333; /* Темно-сірий текст */
+    text-align: center;
+    padding: 20px;
+}
+
+.modal-footer {
+    border-top: none; /* Видаляємо стандартну лінію */
+    justify-content: center; /* Центруємо кнопки */
+}
+
+.modal-footer .btn {
+    border-radius: 20px;
+    padding: 10px 20px;
+}
+
+/* Стиль кнопки закриття */
+.modal-header .close {
+    color: white;
+    opacity: 1;
+    font-size: 1.5rem;
+}
+
+/* Анімація модального вікна */
+.modal.fade .modal-dialog {
+    transform: translateY(-50px);
+    opacity: 0;
+    transition: all 0.3s ease-out;
+}
+
+.modal.show .modal-dialog {
+    transform: translateY(0);
+    opacity: 1;
+}

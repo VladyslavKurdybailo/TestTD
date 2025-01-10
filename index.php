@@ -1,3 +1,17 @@
+<?php
+session_start();
+function generateCsrfToken() {
+    if (empty($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf_token'];
+}
+$csrfToken = generateCsrfToken();
+
+// Спочатку зчитаємо GET-параметри для трекінгу (fbp, ggl)
+$fbPixelId = isset($_GET['fbp']) ? htmlspecialchars($_GET['fbp']) : '';
+$gaId      = isset($_GET['ggl']) ? htmlspecialchars($_GET['ggl']) : '';
+?>
 <!DOCTYPE html>
 <html lang="en">
    <!-- Basic -->
@@ -31,6 +45,39 @@
    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
    <![endif]-->
+
+   <?php if (!empty($fbPixelId)): ?>
+       <!-- Facebook Pixel Code -->
+       <script>
+           !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function()
+           {n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+               if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+               n.queue=[];t=b.createElement(e);t.async=!0;
+               t.src=v;s=b.getElementsByTagName(e)[0];
+               s.parentNode.insertBefore(t,s)}(window, document,'script',
+               'https://connect.facebook.net/en_US/fbevents.js');
+           fbq('init', '<?php echo $fbPixelId; ?>');
+           fbq('track', 'PageView');
+       </script>
+       <noscript>
+           <img height="1" width="1" style="display:none"
+                src="https://www.facebook.com/tr?id=<?php echo $fbPixelId; ?>&ev=PageView&noscript=1"/>
+       </noscript>
+       <!-- End Facebook Pixel Code -->
+   <?php endif; ?>
+
+   <?php if (!empty($gaId)): ?>
+       <!-- Google Analytics -->
+       <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $gaId; ?>"></script>
+       <script>
+           window.dataLayer = window.dataLayer || [];
+           function gtag(){dataLayer.push(arguments);}
+           gtag('js', new Date());
+           gtag('config', '<?php echo $gaId; ?>');
+       </script>
+       <!-- End Google Analytics -->
+   <?php endif; ?>
+
    </head>
    <body class="realestate_version">
       <!-- LOADER -->
@@ -80,8 +127,9 @@
                <div class="col-md-6 wow slideInRight hidden-xs hidden-sm">
                   <div class="contact_form">
                      <h3><i class="fa fa-envelope-o grd1 global-radius"></i> QUICK APPOINTMENT</h3>
-                     <form id="contactform1" class="row" name="contactform" method="post">
-                        <fieldset class="row-fluid">
+                     <form id="contactform1" class="row" name="contactform1" method="post" action="form-handler.php">
+                         <input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
+                         <fieldset class="row-fluid">
                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                               <input type="text" name="first_name1" id="first_name1" class="form-control" placeholder="First Name">
                            </div>
@@ -429,8 +477,9 @@
                <div class="col-md-8 col-md-offset-2">
                   <div class="contact_form">
                      <div id="message"></div>
-                     <form id="contactform" class="row" action="contact.php" name="contactform" method="post">
-                        <fieldset class="row-fluid">
+                     <form id="contactform" class="row" name="contactform" method="post" action="form-handler.php">
+                         <input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
+                         <fieldset class="row-fluid">
                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                               <input type="text" name="first_name" id="first_name" class="form-control" placeholder="First Name">
                            </div>
@@ -570,12 +619,30 @@
       </div>
       <!-- end copyrights -->
       <a href="#home" data-scroll class="dmtop global-radius"><i class="fa fa-angle-up"></i></a>
+      <!-- Success Modal -->
+      <div class="modal" id="successModal">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="successModalLabel">Thank you for reaching out to us!</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+              </div>
+          </div>
+      </div>
       <!-- ALL JS FILES -->
       <script src="js/all.js"></script>
       <!-- ALL PLUGINS -->
       <script src="js/custom.js"></script>
       <script src="js/portfolio.js"></script>
-      <script src="js/hoverdir.js"></script>    
+      <script src="js/hoverdir.js"></script>
       <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
       <!-- MAP & CONTACT -->
       <script src="js/map.js"></script>
