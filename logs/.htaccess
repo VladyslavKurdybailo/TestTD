@@ -1,0 +1,3 @@
+# Защита папки db от внешнего доступа
+Order Deny,Allow
+Deny from all
