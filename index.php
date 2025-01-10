@@ -257,7 +257,7 @@ $gaId      = isset($_GET['ggl']) ? htmlspecialchars($_GET['ggl']) : '';
          <div class="sep1"></div>
       </div>
       <!-- end section -->
-      <div id="agent" class="parallax section db parallax-off" style="background-image:url('uploads/parallax_02.png');">
+      <div id="agent" class="parallax section db parallax-off">
          <div class="container">
             <div class="section-title row text-center">
                <div class="col-md-8 col-md-offset-2">
@@ -389,7 +389,6 @@ $gaId      = isset($_GET['ggl']) ? htmlspecialchars($_GET['ggl']) : '';
                            <p class="lead">They have got my project on time with the competition with a sed highly skilled, and experienced & professional team.</p>
                         </div>
                         <div class="testi-meta">
-                           <img src="uploads/testi_01.png" alt="" class="img-responsive alignleft">
                            <h4>James Fernando <small>- Manager of Racer</small></h4>
                         </div>
                         <!-- end testi-meta -->
@@ -401,7 +400,6 @@ $gaId      = isset($_GET['ggl']) ? htmlspecialchars($_GET['ggl']) : '';
                            <p class="lead">Explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you completed.</p>
                         </div>
                         <div class="testi-meta">
-                           <img src="uploads/testi_02.png" alt="" class="img-responsive alignleft">
                            <h4>Jacques Philips <small>- Designer</small></h4>
                         </div>
                         <!-- end testi-meta -->
@@ -413,7 +411,6 @@ $gaId      = isset($_GET['ggl']) ? htmlspecialchars($_GET['ggl']) : '';
                            <p class="lead">The master-builder of human happines no one rejects, dislikes avoids pleasure itself, because it is very pursue pleasure. </p>
                         </div>
                         <div class="testi-meta">
-                           <img src="uploads/testi_03.png" alt="" class="img-responsive alignleft">
                            <h4>Venanda Mercy <small>- Newyork City</small></h4>
                         </div>
                         <!-- end testi-meta -->
@@ -425,7 +422,6 @@ $gaId      = isset($_GET['ggl']) ? htmlspecialchars($_GET['ggl']) : '';
                            <p class="lead">They have got my project on time with the competition with a sed highly skilled, and experienced & professional team.</p>
                         </div>
                         <div class="testi-meta">
-                           <img src="uploads/testi_01.png" alt="" class="img-responsive alignleft">
                            <h4>James Fernando <small>- Manager of Racer</small></h4>
                         </div>
                         <!-- end testi-meta -->
@@ -437,7 +433,6 @@ $gaId      = isset($_GET['ggl']) ? htmlspecialchars($_GET['ggl']) : '';
                            <p class="lead">Explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you completed.</p>
                         </div>
                         <div class="testi-meta">
-                           <img src="uploads/testi_02.png" alt="" class="img-responsive alignleft">
                            <h4>Jacques Philips <small>- Designer</small></h4>
                         </div>
                         <!-- end testi-meta -->
@@ -449,7 +444,6 @@ $gaId      = isset($_GET['ggl']) ? htmlspecialchars($_GET['ggl']) : '';
                            <p class="lead">The master-builder of human happines no one rejects, dislikes avoids pleasure itself, because it is very pursue pleasure. </p>
                         </div>
                         <div class="testi-meta">
-                           <img src="uploads/testi_03.png" alt="" class="img-responsive alignleft">
                            <h4>Venanda Mercy <small>- Newyork City</small></h4>
                         </div>
                         <!-- end testi-meta -->
@@ -465,7 +459,6 @@ $gaId      = isset($_GET['ggl']) ? htmlspecialchars($_GET['ggl']) : '';
          <!-- end container -->
       </div>
       <!-- end section -->
-      <div id="map"></div>
       <div id="support" class="section wb">
          <div class="container">
             <div class="section-title text-center">
@@ -643,8 +636,5 @@ $gaId      = isset($_GET['ggl']) ? htmlspecialchars($_GET['ggl']) : '';
       <script src="js/custom.js"></script>
       <script src="js/portfolio.js"></script>
       <script src="js/hoverdir.js"></script>
-      <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
-      <!-- MAP & CONTACT -->
-      <script src="js/map.js"></script>
    </body>
 </html>

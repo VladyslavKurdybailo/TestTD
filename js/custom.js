@@ -1,9 +1,6 @@
 (function($) {
     "use strict";
 
-    /* ==============================================
-    AFFIX
-    =============================================== */
     $('.megamenu').affix({
         offset: {
             top: 800,
@@ -41,7 +38,7 @@
     =============================================== */
     function count($this) {
         var current = parseInt($this.html(), 10);
-        current = current + 50; /* Where 50 is increment */
+        current = current + 50;
         $this.html(++current);
         if (current > $this.data('count')) {
             $this.html($this.data('count'));
@@ -113,8 +110,8 @@
                 return; // Зупиняємо відправку форми, якщо є помилки
             }
 
-            const action = $(this).attr('action'); // має бути "form-handler.php"
-            const csrfToken = $('input[name="csrf_token"]').val(); // Получение CSRF-токена
+            const action = $(this).attr('action'); // form-handler.php
+            const csrfToken = $('input[name="csrf_token"]').val();
             const $messageBlock = $("#message");
             $messageBlock.slideUp(750, function() {
                 $messageBlock.hide();
@@ -243,7 +240,7 @@
                 $messageBlock.hide();
             });
 
-            // Кнопка Submit тут має id="submit1"
+            // Кнопка Submit має id="submit1"
             $('#submit1')
                 .after('<img src="" class="loader" />')
                 .attr('disabled', 'disabled');
@@ -256,7 +253,7 @@
                 phone:           $('#phone1').val(),
                 select_service:  $('#select_service1').val(),
                 select_price:    $('#select_price1').val(),
-                csrf_token: csrfToken // Добавление токена в запрос
+                csrf_token: csrfToken
             };
 
             try {

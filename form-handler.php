@@ -6,6 +6,7 @@
  *   - GET AN APPOINTMENT (#contactform)
  * - Повертає JSON-відповідь (success, message, redirectUrl).
  * - Зберігає дані у SQLite (contacts).
+ * - Здійснюється валідація даних.
  * - Логує запити у файл.
  * - Додає геодані (приклад).
  */
@@ -14,11 +15,10 @@
 header('Content-Type: application/json; charset=utf-8');
 session_start();
 
-// Підключаємо потрібні речі
 require_once __DIR__ . '/inc/functions.php';
 
 try {
-    // ---- 1) Перевірка CSRF-токену ----
+    // Перевірка CSRF-токену
     $csrfToken = $_POST['csrf_token'] ?? '';
     $sessionCsrfToken = $_SESSION['csrf_token'] ?? '';
 
@@ -41,7 +41,7 @@ try {
     // (Опціонально) Можна визначити тип форми, якщо треба розрізняти
     // $formType = isset($_POST['first_name1']) ? 'quick' : 'appointment';
 
-    // ---- 1) ВАЛІДАЦІЯ ----
+    // ВАЛІДАЦІЯ
     $errors = [];
     // Перевірка імені
     if ($firstName === '') {
@@ -75,7 +75,7 @@ try {
         exit;
     }
 
-    // ---- 2) ОТРИМАННЯ ГЕОДАНИХ ----
+    // ОТРИМАННЯ ГЕОДАНИХ
     // (Приклад фейкових, або можна викликати реальне API, наприклад ipinfo.io)
     $ip = $_SERVER['REMOTE_ADDR'];
     $geoData = [
@@ -93,7 +93,7 @@ try {
     }
     */
 
-    // ---- 3) ЛОГУВАННЯ ЗАПИТУ ----
+    // ЛОГУВАННЯ ЗАПИТУ
     $logFile = __DIR__ . '/logs/form_requests.log';
     if (!is_dir(__DIR__ . '/logs')) {
         mkdir(__DIR__ . '/logs', 0777, true);
@@ -106,7 +106,7 @@ try {
     );
     file_put_contents($logFile, $logData, FILE_APPEND);
 
-    // ---- 4) ЗБЕРЕЖЕННЯ В БД (SQLite) ----
+    // ЗБЕРЕЖЕННЯ В БД (SQLite)
     $db = getDBConnection();
     $stmt = $db->prepare("
         INSERT INTO contacts
@@ -125,7 +125,7 @@ try {
         ':created' => date('Y-m-d H:i:s'),
     ]);
 
-    // ---- 5) ПОВЕРТАЄМО JSON ----
+    // ПОВЕРТАЄМО JSON
     // Якщо треба робити редирект, вкажемо URL
     // Інакше можна лишити null
     echo json_encode([
